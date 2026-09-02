@@ -1,4 +1,4 @@
-"""Create only structural MongoDB indexes; this script does not seed data."""
+"""Create structural MongoDB indexes; this script does not seed data."""
 
 import asyncio
 import os

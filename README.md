@@ -94,6 +94,8 @@ backend\.venv\Scripts\python database/scripts/create_indexes.py
 
 No university, student, or scholarship records are seeded by the foundation.
 
+For the Part 2 MongoDB design, see [database/README.md](database/README.md). It documents the 15 collections, initializes their indexes, provides explicitly synthetic demo seed data, and includes a backend-repository CRUD smoke test.
+
 ## Status
 
 Project foundation established. Authentication and all product features remain unimplemented.
