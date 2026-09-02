@@ -64,6 +64,17 @@ uvicorn app.main:app --reload
 
 The API health check is `http://localhost:8000/api/v1/health`; OpenAPI docs are at `http://localhost:8000/docs`.
 
+### Authentication
+
+`POST /api/v1/auth/register` creates student accounts only. Teachers and admins must be provisioned by an approved backend/admin workflow; the public request never accepts a role. Login uses `POST /api/v1/auth/login`, token-backed identity is at `GET /api/v1/auth/me`, and `POST /api/v1/auth/logout` revokes the current JWT until it expires.
+
+For synthetic local seed data only, use the `*.demo@prok.example` accounts with password `ProkDemo!2026`. Change `JWT_SECRET` in `backend/.env` before any non-local use. Run authentication tests with:
+
+```powershell
+backend\.venv\Scripts\python -m pip install -r requirements-dev.txt
+backend\.venv\Scripts\python -m unittest discover -s tests -p test_auth.py
+```
+
 ### Start the web app
 
 ```powershell

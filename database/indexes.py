@@ -63,4 +63,8 @@ INDEXES: dict[str, list[IndexDefinition]] = {
         ([("student_id", 1), ("updated_at", -1)], {"name": "conversations_student_recent"}),
         ([("expires_at", 1)], {"expireAfterSeconds": 0, "name": "conversations_expiry"}),
     ],
+    "revoked_tokens": [
+        ([("jti", 1)], {"unique": True, "name": "revoked_tokens_jti_unique"}),
+        ([("expires_at", 1)], {"expireAfterSeconds": 0, "name": "revoked_tokens_expiry"}),
+    ],
 }

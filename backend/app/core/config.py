@@ -14,6 +14,9 @@ class Settings(BaseSettings):
     mongodb_uri: str = "mongodb://localhost:27017"
     mongodb_database: str = "prok"
     cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173"
+    jwt_secret: str = "development-only-change-me-before-deployment"
+    jwt_algorithm: str = "HS256"
+    access_token_expire_minutes: int = 30
 
     @property
     def cors_origin_list(self) -> list[str]:

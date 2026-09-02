@@ -32,6 +32,7 @@ The seeder is idempotent and only writes records carrying `is_synthetic_demo_dat
 | `interventions` | Human-owned student-support workflow: reason, owner, status, compact notes. |
 | `notifications` | Per-user inbox; `expires_at` TTL index cleans old notifications. |
 | `ai_conversations` | Minimal metadata and bounded messages; no copied profile/document data; TTL expiry. |
+| `revoked_tokens` | Security-support collection for logged-out JWT IDs; TTL expiry matches token expiry. |
 
 ## Storage abstraction
 
@@ -39,7 +40,9 @@ The seeder is idempotent and only writes records carrying `is_synthetic_demo_dat
 
 ## Indexes and CRUD verification
 
-`indexes.py` contains the repeatable index definitions: unique identity/profile/course/enrollment/attendance/application keys; dashboard, roster, review-queue and inbox query indexes; and TTL indexes for notifications and AI conversations.
+`indexes.py` contains repeatable definitions for the 15 core collections plus `revoked_tokens`: unique identity/profile/course/enrollment/attendance/application keys; dashboard, roster, review-queue and inbox query indexes; and TTL indexes for notifications, AI conversations, and logged-out tokens.
+
+The synthetic seed accounts use the documented local-only password `ProkDemo!2026`. Change or remove them outside local development.
 
 `verify_backend_crud.py` imports the backend `MongoRepository`, then creates, reads, updates, deletes, and confirms deletion of a temporary notification. It leaves no record behind; run it only against a development database.
 

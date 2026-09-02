@@ -11,6 +11,8 @@ from pymongo import AsyncMongoClient, ReturnDocument
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from indexes import INDEXES  # noqa: E402
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "backend"))
+from app.core.security import hash_password  # noqa: E402
 
 
 async def upsert(db: Any, collection: str, key: str, fields: dict[str, Any]) -> dict[str, Any]:
@@ -33,10 +35,11 @@ async def main() -> None:
                 await db[collection].create_index(keys, **options)
 
         stamp, term = datetime.now(UTC), "DEMO-2026-FALL"
-        admin_user = await upsert(db, "users", "admin-user", {"email": "admin.demo@prok.example", "display_name": "Avery Admin", "role": "admin", "active": True, "updated_at": stamp})
-        teacher_user = await upsert(db, "users", "teacher-user", {"email": "teacher.demo@prok.example", "display_name": "Taylor Teacher", "role": "teacher", "active": True, "updated_at": stamp})
-        student_user_1 = await upsert(db, "users", "student-user-1", {"email": "student.one@prok.example", "display_name": "Sam Student", "role": "student", "active": True, "updated_at": stamp})
-        student_user_2 = await upsert(db, "users", "student-user-2", {"email": "student.two@prok.example", "display_name": "Riley Student", "role": "student", "active": True, "updated_at": stamp})
+        demo_password_hash = hash_password("ProkDemo!2026")
+        admin_user = await upsert(db, "users", "admin-user", {"email": "admin.demo@prok.example", "display_name": "Avery Admin", "role": "admin", "active": True, "password_hash": demo_password_hash, "updated_at": stamp})
+        teacher_user = await upsert(db, "users", "teacher-user", {"email": "teacher.demo@prok.example", "display_name": "Taylor Teacher", "role": "teacher", "active": True, "password_hash": demo_password_hash, "updated_at": stamp})
+        student_user_1 = await upsert(db, "users", "student-user-1", {"email": "student.one@prok.example", "display_name": "Sam Student", "role": "student", "active": True, "password_hash": demo_password_hash, "updated_at": stamp})
+        student_user_2 = await upsert(db, "users", "student-user-2", {"email": "student.two@prok.example", "display_name": "Riley Student", "role": "student", "active": True, "password_hash": demo_password_hash, "updated_at": stamp})
         await upsert(db, "admins", "admin-profile", {"user_id": admin_user["_id"], "department": "Student Success", "permissions": ["review_documents", "view_analytics"], "updated_at": stamp})
         teacher = await upsert(db, "teachers", "teacher-profile", {"user_id": teacher_user["_id"], "employee_number": "DEMO-T-001", "department": "Computer Science", "title": "Lecturer", "updated_at": stamp})
         student_1 = await upsert(db, "students", "student-profile-1", {"user_id": student_user_1["_id"], "student_number": "DEMO-S-001", "program": {"code": "BSC-CS", "name": "BSc Computer Science"}, "year_level": 2, "academic_status": "active", "interests": ["data", "design"], "updated_at": stamp})

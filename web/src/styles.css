@@ -9,3 +9,11 @@ h1 { font-size: clamp(2.5rem, 6vw, 4.8rem); line-height: 1.04; margin: .4rem 0 1
 .api-card span, .api-card code { display: block; }
 .api-card span { color: #60718a; font-size: .85rem; margin-bottom: .4rem; }
 .api-card code { color: #237b70; overflow-wrap: anywhere; }
+.auth-form { display: grid; gap: 1rem; max-width: 440px; }
+label { display: grid; gap: .35rem; color: #4f6078; font-weight: 600; }
+input { border: 1px solid #c8d3e1; border-radius: 8px; padding: .7rem; font: inherit; }
+button { width: fit-content; border: 0; border-radius: 8px; background: #237b70; color: white; cursor: pointer; font: inherit; font-weight: 700; padding: .7rem 1rem; }
+button:disabled { cursor: wait; opacity: .7; }
+.secondary-button { margin-top: 1rem; background: #4f6078; }
+.form-error { color: #a12626; margin: 0; }
+.api-hint { color: #60718a; font-size: .85rem; }
